@@ -1,0 +1,24 @@
+.profile__info {
+  max-width: 340px;
+  display: grid;
+  grid-template-columns: fit-content(300px) 1fr;
+  grid-template-rows: min-content min-content;
+  grid-template-areas:
+    "name edit-btn"
+    "about-me about-me";
+  gap: 16px 18px;
+  align-content: center;
+}
+
+@media screen and (max-width: 935px){
+  .profile__info {
+    width: 100%;
+    margin: 26px 0 36px;
+    display: grid;
+    gap: 14px 10px;
+    grid-template-columns: 1fr fit-content(190px) 1fr;
+    grid-template-areas:
+      ". name edit-btn"
+      "about-me about-me about-me";
+  }
+}

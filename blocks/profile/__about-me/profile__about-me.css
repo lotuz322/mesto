@@ -1,0 +1,16 @@
+.profile__about-me {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  grid-area: about-me;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+@media screen and (max-width: 935px) {
+  .profile__about-me {
+    font-size: 14px;
+    text-align: center;
+  }
+}
