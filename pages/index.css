@@ -18,5 +18,12 @@
 @import url(../blocks/profile/__add-btn/profile__add-btn.css);
 @import url(../blocks/profile/__about-me/profile__about-me.css);
 
+@import url(../blocks/photo-gallery/photo-gallery.css);
+@import url(../blocks/photo-gallery/__item/photo-gallery__item.css);
+@import url(../blocks/photo-gallery/__image/photo-gallery__image.css);
+@import url(../blocks/photo-gallery/__info/photo-gallery__info.css);
+@import url(../blocks/photo-gallery/__name/photo-gallery__name.css);
+@import url(../blocks/photo-gallery/__like-btn/photo-gallery__like-btn.css);
+
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);

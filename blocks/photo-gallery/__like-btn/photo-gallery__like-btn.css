@@ -1,0 +1,12 @@
+.photo-gallery__like-btn {
+  width: 22px;
+  height: 19px;
+  background: no-repeat center / 100% 100% url(../../../images/icon-like.svg);
+  border-width: 0;
+  cursor: pointer;
+  transition: opacity .5s ease-in-out;
+}
+
+.photo-gallery__like-btn:hover {
+  opacity: 0.6;
+}

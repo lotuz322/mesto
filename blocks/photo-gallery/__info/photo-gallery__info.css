@@ -1,0 +1,16 @@
+.photo-gallery__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  color: black;
+  padding: 25px 20px 31px 20px;
+}
+
+@media screen and (max-width: 935px){
+  .header {
+    max-width: 100%;
+  }
+}
+
+
