@@ -15,3 +15,4 @@
 
 
 **Ссылка на GitHub Pages**
+* https://lotuz322.github.io/mesto/index.html
