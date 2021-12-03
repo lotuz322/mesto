@@ -1,6 +1,8 @@
 const formElement = document.querySelector(".popup__container");
-formElement.addEventListener('submit', formSubmitHandler);
-formElement.addEventListener('submit', togglePopUp);
+formElement.addEventListener('submit', (evt) => {
+  togglePopUp();
+  formSubmitHandler(evt);
+});
 
 const nameInput = formElement.querySelector("#name");
 const aboutMeInput = formElement.querySelector("#about-me");
@@ -11,8 +13,10 @@ const profileName = document.querySelector(".profile__name");
 const profileAboutMe = document.querySelector(".profile__about-me");
 
 const editButton = document.querySelector(".profile__edit-btn");
-editButton.addEventListener("click", togglePopUp);
-editButton.addEventListener("click", popUpUpdate);
+editButton.addEventListener('click', () => {
+  popUpUpdate();
+  togglePopUp();
+});
 
 const closePopUp = document.querySelector(".popup__close-btn");
 closePopUp.addEventListener("click", togglePopUp);
