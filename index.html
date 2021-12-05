@@ -25,53 +25,7 @@
       </section>
 
       <section class="photo-gallery">
-        <figure class="photo-gallery__item">
-          <img class="photo-gallery__image" src="images/karachevsk.jpg" alt="Карачаевск">
-          <figcaption class="photo-gallery__info">
-            <p class="photo-gallery__name">Карачаевск</p>
-            <button type="button" class="photo-gallery__like-btn"></button>
-          </figcaption>
-        </figure>
 
-        <figure class="photo-gallery__item">
-          <img class="photo-gallery__image" src="images/gora-elbrus.jpg" alt="Гора Эльбрус">
-          <figcaption class="photo-gallery__info">
-            <p class="photo-gallery__name">Гора Эльбрус</p>
-            <button type="button" class="photo-gallery__like-btn"></button>
-          </figcaption>
-        </figure>
-
-        <figure class="photo-gallery__item">
-          <img class="photo-gallery__image" src="images/dombai.jpg" alt="Домбай">
-          <figcaption class="photo-gallery__info">
-            <p class="photo-gallery__name">Домбай</p>
-            <button type="button" class="photo-gallery__like-btn"></button>
-          </figcaption>
-        </figure>
-
-        <figure class="photo-gallery__item">
-          <img class="photo-gallery__image" src="images/gora-elbrus.jpg" alt="Гора Эльбрус">
-          <figcaption class="photo-gallery__info">
-            <p class="photo-gallery__name">Гора Эльбрус</p>
-            <button type="button" class="photo-gallery__like-btn"></button>
-          </figcaption>
-        </figure>
-
-        <figure class="photo-gallery__item">
-          <img class="photo-gallery__image" src="images/dombai.jpg" alt="Домбай">
-          <figcaption class="photo-gallery__info">
-            <p class="photo-gallery__name">Домбай</p>
-            <button type="button" class="photo-gallery__like-btn"></button>
-          </figcaption>
-        </figure>
-
-        <figure class="photo-gallery__item">
-          <img class="photo-gallery__image" src="images/karachevsk.jpg" alt="Карачаево-Черкесия">
-          <figcaption class="photo-gallery__info">
-            <p class="photo-gallery__name">Карачаево-Черкесия</p>
-            <button type="button" class="photo-gallery__like-btn"></button>
-          </figcaption>
-        </figure>
       </section>
     </main>
 
@@ -79,8 +33,8 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
-      <form name="popup" class="popup__container" method="post">
+    <div class="popup popup-edit-profile">
+      <form name="popup-edit-profile" class="popup__container" method="post">
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
           <input class="popup__item" id="name" type="text" name="name">
@@ -90,6 +44,28 @@
         <button class="popup__close-btn" type="button"></button>
       </form>
     </div>
+
+    <div class="popup popup-add-card">
+      <form name="popup-add-card" class="popup__container" method="post">
+        <h2 class="popup__title">Новое место</h2>
+        <fieldset class="popup__input-container">
+          <input class="popup__item" id="add-card-name" type="text" name="add-card-name">
+          <input class="popup__item" id="add-card-url" type="text" name="add-card-url">
+          <button class="popup__submit-btn" type="submit">Создать</button>
+        </fieldset>
+        <button class="popup__close-btn" type="button"></button>
+      </form>
+    </div>
+
+    <template id="gallery__item">
+      <figure class="photo-gallery__item">
+        <img class="photo-gallery__image" src="images/karachevsk.jpg" alt="Карачаевск">
+        <figcaption class="photo-gallery__info">
+          <p class="photo-gallery__name">Карачаевск</p>
+          <button type="button" class="photo-gallery__like-btn"></button>
+        </figcaption>
+      </figure>
+    </template>
 
     <script src="scripts/index.js"></script>
 </body>
