@@ -1,0 +1,15 @@
+.photo-gallery__delete-btn {
+  width: 18px;
+  height: 19px;
+  background: no-repeat center / 100% 100% url(../../../images/icon-trash.svg);
+  border-width: 0;
+  cursor: pointer;
+  transition: opacity .5s ease-in-out;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.photo-gallery__delete-btn:hover {
+  opacity: 0.6;
+}

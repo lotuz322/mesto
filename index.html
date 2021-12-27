@@ -34,7 +34,7 @@
     </footer>
 
     <div class="popup popup-edit-profile">
-      <form name="popup-edit-profile" class="popup__container" method="post">
+      <form name="popup-edit-profile" class="popup__container popup__container_type_form" method="post">
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
           <input class="popup__item" id="name" type="text" name="name">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="popup popup-add-card">
-      <form name="popup-add-card" class="popup__container" method="post">
+      <form name="popup-add-card" class="popup__container popup__container_type_form" method="post">
         <h2 class="popup__title">Новое место</h2>
         <fieldset class="popup__input-container">
           <input class="popup__item" id="add-card-name" type="text" name="add-card-name">
@@ -57,13 +57,24 @@
       </form>
     </div>
 
+    <div class="popup popup-view-image">
+      <figure class="popup__container popup__container_type_view-image">
+        <img class="popup__image">
+        <figcaption>
+          <p class="popup__paragraph"></p>
+        </figcaption>
+        <button class="popup__close-btn" type="button"></button>
+      </figure>
+    </div>
+
     <template id="gallery__item">
       <figure class="photo-gallery__item">
         <img class="photo-gallery__image" src="images/karachevsk.jpg" alt="Карачаевск">
         <figcaption class="photo-gallery__info">
           <p class="photo-gallery__name">Карачаевск</p>
-          <button type="button" class="photo-gallery__like-btn"></button>
+          <button class="photo-gallery__like-btn" type="button"></button>
         </figcaption>
+        <button class="photo-gallery__delete-btn" type="button"></button>
       </figure>
     </template>
 
