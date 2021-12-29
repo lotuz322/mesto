@@ -26,7 +26,7 @@ const initialCards = [
 ];
 const galleryItemTemplate = document.querySelector('#gallery__item').content.querySelector('.photo-gallery__item');
 const gallery = document = document.querySelector('.photo-gallery');
-initialCards.forEach(item => addCard(item.name, item.link));
+initialCards.forEach(item => renderCard(item.name, item.link));
 
 const popUpEditProfile = document.querySelector('.popup-edit-profile');
 const nameInputPopUpEdit = popUpEditProfile.querySelector('#name');
@@ -46,7 +46,7 @@ const urlInputPopUpAddCard = popUpAddCard.querySelector('#add-card-url');
 popUpAddCard.querySelector('.popup__container').addEventListener('submit', (evt) => {
   evt.preventDefault();
   togglePopUp(popUpAddCard);
-  addCard(nameInputPopUpAddCard.value, urlInputPopUpAddCard.value);
+  renderCard(nameInputPopUpAddCard.value, urlInputPopUpAddCard.value);
 });
 
 const popUpViewImage = document.querySelector('.popup-view-image');
@@ -73,7 +73,6 @@ function togglePopUp(targetPopUp) {
 
 function addCard(name, link) {
   const galleryItemElement = galleryItemTemplate.cloneNode(true);
-  galleryItemElement.querySelector('.photo-gallery__image').src = link;
   galleryItemElement.querySelector('.photo-gallery__name').textContent = name;
   galleryItemElement.querySelector('.photo-gallery__like-btn').addEventListener('click', evt => {
     evt.target.classList.toggle('photo-gallery__like-btn_active')
@@ -81,10 +80,19 @@ function addCard(name, link) {
   galleryItemElement.querySelector('.photo-gallery__delete-btn').addEventListener('click', evt => {
     evt.target.closest('.photo-gallery__item').remove();
   });
-  galleryItemElement.querySelector('.photo-gallery__image').addEventListener('click', () => {
+
+  const imageElement = galleryItemElement.querySelector('.photo-gallery__image');
+  imageElement.src = link;
+  imageElement.addEventListener('click', () => {
     togglePopUp(popUpViewImage);
     srcPopUpViewImage.src = link;
     paragraphPopUpViewImage.textContent = name;
   });
-  gallery.prepend(galleryItemElement);
+
+  return galleryItemElement;
 }
+
+function renderCard(name, link) {
+  gallery.prepend(addCard(name, link));
+}
+
