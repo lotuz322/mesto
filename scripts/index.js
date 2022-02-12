@@ -30,6 +30,7 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
 const galleryItemTemplate = document.querySelector('#gallery__item').content.querySelector('.photo-gallery__item');
 const gallery = document = document.querySelector('.photo-gallery');
 initialCards.forEach(item => renderCard(item.name, item.link, item.alt));
@@ -69,12 +70,32 @@ document.querySelector(".profile__add-btn").addEventListener('click', () => {
   togglePopUp(popUpAddCard);
 });
 
-document.querySelectorAll(".popup__close-btn")
-  .forEach(item => item.addEventListener('click', evt => {
-    togglePopUp(evt.target.closest('.popup'))}));
-
 function togglePopUp(targetPopUp) {
-  targetPopUp.classList.toggle("popup_opened");
+  if(targetPopUp.classList.contains('popup_opened'))
+    targetPopUp.classList.remove('popup_opened');
+  else
+    targetPopUp.classList.add("popup_opened");
+}
+
+const setPopupEventClose = () => {
+  const popupList = Array.from(document.querySelectorAll(".popup"));
+  document.addEventListener('keydown', evt => {
+    if(evt.key === 'Escape') {
+      popupList.forEach(popupElement => {
+        popupElement.classList.remove('popup_opened');
+      });
+    }
+  });
+  popupList.forEach(popupElement => {
+    const buttonElement = popupElement.querySelector('.popup__close-btn');
+    popupElement.addEventListener('click', (evt) => {
+      if(evt.target.classList.contains('popup'))
+        popupElement.classList.remove('popup_opened');
+    });
+    buttonElement.addEventListener('click', () => {
+      togglePopUp(popupElement);
+    });
+  });
 }
 
 function addCard(name, link, alt) {
@@ -104,3 +125,5 @@ function renderCard(name, link, alt) {
   gallery.prepend(addCard(name, link, alt));
 }
 
+
+setPopupEventClose();

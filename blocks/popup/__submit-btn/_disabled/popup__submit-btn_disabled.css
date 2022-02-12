@@ -1,0 +1,4 @@
+.popup__submit-btn_disabled {
+  pointer-events: none;
+  opacity: 0.2;
+}
