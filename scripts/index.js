@@ -23,26 +23,28 @@ const closePopupByEsc = (evt) => {
   }
 }
 
+const closePopupByClick = () => {
+  const openedPopup = document.querySelector('.popup_opened');
+  togglePopUp(openedPopup);
+}
+
 const togglePopUp = (targetPopUp) => {
   if(targetPopUp.classList.contains('popup_opened')) {
     targetPopUp.classList.remove('popup_opened');
+    targetPopUp.removeEventListener('mousedown', closePopupByClick);
     document.removeEventListener('keydown', closePopupByEsc);
   } else {
     targetPopUp.classList.add("popup_opened");
+    targetPopUp.addEventListener('mousedown', closePopupByClick);
     document.addEventListener('keydown', closePopupByEsc);
   }
 }
 
 const setPopupEventClose = () => {
-  const popupList = Array.from(document.querySelectorAll(".popup"));
-  popupList.forEach(popupElement => {
-    const buttonElement = popupElement.querySelector('.popup__close-btn');
-    popupElement.addEventListener('click', (evt) => {
-      if(evt.target.classList.contains('popup'))
-        popupElement.classList.remove('popup_opened');
-    });
-    buttonElement.addEventListener('mousedown', () => {
-      togglePopUp(popupElement);
+  const buttonList = Array.from(document.querySelectorAll(".popup__close-btn"));
+  buttonList.forEach(buttonElement => {
+    buttonElement.addEventListener('click', (evt) => {
+        togglePopUp(evt.target);
     });
   });
 }
@@ -76,19 +78,27 @@ const renderCard = (name, link, alt) => {
 
 popUpEditProfile.querySelector('.popup__container').addEventListener('submit', evt => {
   evt.preventDefault();
-  popUpEditProfile.querySelector('.popup__submit-btn').setAttribute('disabled', '')
-  togglePopUp(popUpEditProfile);
   profileName.textContent = nameInputPopUpEdit.value;
   profileAboutMe.textContent = aboutMeInputPopUpEdit.value;
+
+  const buttonElement = popUpEditProfile.querySelector('.popup__submit-btn');
+  buttonElement.setAttribute('disabled', '');
+  buttonElement.classList.add('popup__submit-btn_disabled');
+
+  togglePopUp(popUpEditProfile);
 });
 
 popUpAddCard.querySelector('.popup__container').addEventListener('submit', (evt) => {
   evt.preventDefault();
-  popUpAddCard.querySelector('.popup__submit-btn').setAttribute('disabled', '')
-  togglePopUp(popUpAddCard);
   renderCard(nameInputPopUpAddCard.value, urlInputPopUpAddCard.value, nameInputPopUpAddCard.value);
+
+  const buttonElement = popUpAddCard.querySelector('.popup__submit-btn');
+  buttonElement.setAttribute('disabled', '');
+  buttonElement.classList.add('popup__submit-btn_disabled');
+
   nameInputPopUpAddCard.value = '';
   urlInputPopUpAddCard.value = '';
+  togglePopUp(popUpAddCard);
 });
 
 document.querySelector(".profile__edit-btn").addEventListener('click', () => {
