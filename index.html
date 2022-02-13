@@ -37,9 +37,9 @@
       <form name="popup-edit-profile" class="popup__container popup__container_type_form" method="post" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
-          <input class="popup__item" id="name" type="text" name="name" required minlength="2" maxlength="40">
+          <input class="popup__item" id="name" type="text" name="name" required minlength="2" maxlength="40" placeholder="Введите имя">
           <span class="popup__item-error name-error"></span>
-          <input class="popup__item" id="about-me" type="text" name="about-me" required minlength="2" maxlength="200">
+          <input class="popup__item" id="about-me" type="text" name="about-me" required minlength="2" maxlength="200" placeholder="Расскажите о себе">
           <span class="popup__item-error about-me-error"></span>
           <button class="popup__submit-btn" type="submit">Сохранить</button>
         </fieldset>
@@ -51,9 +51,9 @@
       <form name="popup-add-card" class="popup__container popup__container_type_form" method="post" novalidate>
         <h2 class="popup__title">Новое место</h2>
         <fieldset class="popup__input-container">
-          <input class="popup__item" id="add-card-name" type="text" name="add-card-name" required minlength="2" maxlength="30">
+          <input class="popup__item" id="add-card-name" type="text" name="add-card-name" required minlength="2" maxlength="30" placeholder="Название места">
           <span class="popup__item-error add-card-name-error"></span>
-          <input class="popup__item" id="add-card-url" name="add-card-url" type="url" required>
+          <input class="popup__item" id="add-card-url" name="add-card-url" type="url" required placeholder="Ссылка на сайт">
           <span class="popup__item-error add-card-url-error"></span>
           <button class="popup__submit-btn" type="submit">Создать</button>
         </fieldset>
@@ -81,7 +81,9 @@
         <button class="photo-gallery__delete-btn" type="button"></button>
       </figure>
     </template>
-    <script src="scripts/index.js"></script>
+
+    <script src="scripts/default-value.js"></script>
     <script src="scripts/validate.js"></script>
+    <script src="scripts/index.js"></script>
 </body>
 </html>

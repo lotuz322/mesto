@@ -4,4 +4,9 @@
   height: 282px;
   object-fit: cover;
   object-position: center;
+  transition: opacity .5s ease-in-out;
+}
+
+.photo-gallery__image:hover {
+  opacity: 0.8;
 }
