@@ -23,9 +23,11 @@ const closePopupByEsc = (evt) => {
   }
 }
 
-const closePopupByClick = () => {
+const closePopupByClick = (evt) => {
   const openedPopup = document.querySelector('.popup_opened');
-  togglePopUp(openedPopup);
+  if(evt.target.classList.contains('popup')) {
+    togglePopUp(openedPopup);
+  }
 }
 
 const togglePopUp = (targetPopUp) => {
@@ -44,7 +46,7 @@ const setPopupEventClose = () => {
   const buttonList = Array.from(document.querySelectorAll(".popup__close-btn"));
   buttonList.forEach(buttonElement => {
     buttonElement.addEventListener('click', (evt) => {
-        togglePopUp(evt.target);
+        togglePopUp(evt.target.closest('.popup'));
     });
   });
 }
