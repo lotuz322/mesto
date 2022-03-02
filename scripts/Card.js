@@ -26,8 +26,7 @@ export default class Card {
   }
 
   _handleLike() {
-    this._element.querySelector('.photo-gallery__like-btn')
-      .classList.toggle('photo-gallery__like-btn_active');
+    this._likeButton.classList.toggle('photo-gallery__like-btn_active');
   }
 
   _handleOpenPopup() {
@@ -42,7 +41,7 @@ export default class Card {
       this._handleRemoveCard();
     });
 
-    this._element.querySelector('.photo-gallery__like-btn').addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
       this._handleLike();
     });
 
@@ -53,6 +52,7 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    this._likeButton = this._element.querySelector('.photo-gallery__like-btn');
     this._setEventListeners();
 
     this._element.querySelector('.photo-gallery__name').textContent = this._name;

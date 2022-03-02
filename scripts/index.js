@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import { initialCards } from './default-value.js';
+import { settings } from './validator-settings.js';
 
 const ESC_CODE = 'Escape';
 const gallery = document.querySelector('.photo-gallery');
@@ -14,6 +15,9 @@ const profileAboutMe = document.querySelector('.profile__about-me');
 const popUpAddCard = document.querySelector('.popup-add-card');
 const nameInputPopUpAddCard = popUpAddCard.querySelector('#add-card-name');
 const urlInputPopUpAddCard = popUpAddCard.querySelector('#add-card-url');
+
+const validatorAddCard = new FormValidator(settings, document.forms['popup-add-card']);
+const validatorEditProfile =  new FormValidator(settings, document.forms['popup-edit-profile']);
 
 const closePopupByEsc = (evt) => {
   if(evt.key === ESC_CODE) {
@@ -51,20 +55,20 @@ popUpEditProfile.querySelector('.popup__container').addEventListener('submit', e
   profileName.textContent = nameInputPopUpEdit.value;
   profileAboutMe.textContent = aboutMeInputPopUpEdit.value;
 
-  const buttonElement = popUpEditProfile.querySelector('.popup__submit-btn');
-  buttonElement.setAttribute('disabled', '');
-  buttonElement.classList.add('popup__submit-btn_disabled');
+  validatorEditProfile.toggleButtonState();
 
   togglePopUp(popUpEditProfile);
 });
 
 popUpAddCard.querySelector('.popup__container').addEventListener('submit', (evt) => {
   evt.preventDefault();
-  renderCard(nameInputPopUpAddCard.value, urlInputPopUpAddCard.value, nameInputPopUpAddCard.value);
+  renderCard({
+    name: nameInputPopUpAddCard.value,
+    alt: nameInputPopUpAddCard.value,
+    link: urlInputPopUpAddCard.value
+  });
 
-  const buttonElement = popUpAddCard.querySelector('.popup__submit-btn');
-  buttonElement.setAttribute('disabled', '');
-  buttonElement.classList.add('popup__submit-btn_disabled');
+  validatorAddCard.toggleButtonState();
 
   nameInputPopUpAddCard.value = '';
   urlInputPopUpAddCard.value = '';
@@ -81,21 +85,14 @@ document.querySelector(".profile__add-btn").addEventListener('click', () => {
   togglePopUp(popUpAddCard);
 });
 
-Array.from(document.querySelectorAll(".popup__close-btn")).forEach(buttonElement => {
+document.querySelectorAll(".popup__close-btn").forEach(buttonElement => {
   buttonElement.addEventListener('click', (evt) => {
     togglePopUp(evt.target.closest('.popup'));
   });
 });
 
 initialCards.forEach(item => renderCard(item));
+validatorAddCard.enableValidation();
+validatorEditProfile.enableValidation();
 
-Array.from(document.querySelectorAll('.popup__container_type_form')).forEach(formElement => {
-  const form = new FormValidator({
-    inputSelector: '.popup__item',
-    submitButtonSelector: '.popup__submit-btn',
-    inactiveButtonClass: 'popup__submit-btn_disabled',
-    inputErrorClass: 'popup__item_type_error',
-    errorClass: 'popup__item-error_active'
-  }, formElement);
-  form.enableValidation();
-});
+
