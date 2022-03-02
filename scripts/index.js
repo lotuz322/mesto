@@ -1,6 +1,9 @@
-const ESC_CODE =  'Escape';
-const galleryItemTemplate = document.querySelector('#gallery__item').content.querySelector('.photo-gallery__item');
-const gallery = document = document.querySelector('.photo-gallery');
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import { initialCards } from './default-value.js';
+
+const ESC_CODE = 'Escape';
+const gallery = document.querySelector('.photo-gallery');
 
 const popUpEditProfile = document.querySelector('.popup-edit-profile');
 const nameInputPopUpEdit = popUpEditProfile.querySelector('#name');
@@ -11,10 +14,6 @@ const profileAboutMe = document.querySelector('.profile__about-me');
 const popUpAddCard = document.querySelector('.popup-add-card');
 const nameInputPopUpAddCard = popUpAddCard.querySelector('#add-card-name');
 const urlInputPopUpAddCard = popUpAddCard.querySelector('#add-card-url');
-
-const popUpViewImage = document.querySelector('.popup-view-image');
-const srcPopUpViewImage = popUpViewImage.querySelector('.popup__image');
-const paragraphPopUpViewImage = popUpViewImage.querySelector('.popup__paragraph');
 
 const closePopupByEsc = (evt) => {
   if(evt.key === ESC_CODE) {
@@ -30,7 +29,7 @@ const closePopupByClick = (evt) => {
   }
 }
 
-const togglePopUp = (targetPopUp) => {
+export const togglePopUp = (targetPopUp) => {
   if(targetPopUp.classList.contains('popup_opened')) {
     targetPopUp.classList.remove('popup_opened');
     targetPopUp.removeEventListener('mousedown', closePopupByClick);
@@ -42,40 +41,9 @@ const togglePopUp = (targetPopUp) => {
   }
 }
 
-const setPopupEventClose = () => {
-  const buttonList = Array.from(document.querySelectorAll(".popup__close-btn"));
-  buttonList.forEach(buttonElement => {
-    buttonElement.addEventListener('click', (evt) => {
-        togglePopUp(evt.target.closest('.popup'));
-    });
-  });
-}
-
-const createCard = (name, link, alt) => {
-  const galleryItemElement = galleryItemTemplate.cloneNode(true);
-  galleryItemElement.querySelector('.photo-gallery__name').textContent = name;
-  galleryItemElement.querySelector('.photo-gallery__like-btn').addEventListener('click', evt => {
-    evt.target.classList.toggle('photo-gallery__like-btn_active')
-  });
-  galleryItemElement.querySelector('.photo-gallery__delete-btn').addEventListener('click', evt => {
-    evt.target.closest('.photo-gallery__item').remove();
-  });
-
-  const imageElement = galleryItemElement.querySelector('.photo-gallery__image');
-  imageElement.src = link;
-  imageElement.alt = alt;
-  imageElement.addEventListener('click', () => {
-    togglePopUp(popUpViewImage);
-    srcPopUpViewImage.src = link;
-    srcPopUpViewImage.alt = alt;
-    paragraphPopUpViewImage.textContent = name;
-  });
-
-  return galleryItemElement;
-}
-
-const renderCard = (name, link, alt) => {
-  gallery.prepend(createCard(name, link, alt));
+const renderCard = (data) => {
+  const card = new Card(data, '#gallery__item');
+  gallery.prepend(card.generateCard());
 }
 
 popUpEditProfile.querySelector('.popup__container').addEventListener('submit', evt => {
@@ -113,5 +81,21 @@ document.querySelector(".profile__add-btn").addEventListener('click', () => {
   togglePopUp(popUpAddCard);
 });
 
-setPopupEventClose();
-initialCards.forEach(item => renderCard(item.name, item.link, item.alt));
+Array.from(document.querySelectorAll(".popup__close-btn")).forEach(buttonElement => {
+  buttonElement.addEventListener('click', (evt) => {
+    togglePopUp(evt.target.closest('.popup'));
+  });
+});
+
+initialCards.forEach(item => renderCard(item));
+
+Array.from(document.querySelectorAll('.popup__container_type_form')).forEach(formElement => {
+  const form = new FormValidator({
+    inputSelector: '.popup__item',
+    submitButtonSelector: '.popup__submit-btn',
+    inactiveButtonClass: 'popup__submit-btn_disabled',
+    inputErrorClass: 'popup__item_type_error',
+    errorClass: 'popup__item-error_active'
+  }, formElement);
+  form.enableValidation();
+});
