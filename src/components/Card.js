@@ -1,13 +1,9 @@
-import {togglePopUp} from './index.js';
-const popUpViewImage = document.querySelector('.popup-view-image');
-const srcPopUpViewImage = popUpViewImage.querySelector('.popup__image');
-const paragraphPopUpViewImage = popUpViewImage.querySelector('.popup__paragraph');
-
 export default class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
-    this._link = data.link;
-    this._alt = data.alt;
+  constructor({name, link, alt, handleCardClick}, cardSelector) {
+    this._name = name;
+    this._link = link;
+    this._alt = alt;
+    this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
   }
 
@@ -29,13 +25,6 @@ export default class Card {
     this._likeButton.classList.toggle('photo-gallery__like-btn_active');
   }
 
-  _handleOpenPopup() {
-    togglePopUp(popUpViewImage);
-    srcPopUpViewImage.src = this._link;
-    srcPopUpViewImage.alt = this._alt;
-    paragraphPopUpViewImage.textContent = this._name;
-  }
-
   _setEventListeners() {
     this._element.querySelector('.photo-gallery__delete-btn').addEventListener('click', () => {
       this._handleRemoveCard();
@@ -46,7 +35,7 @@ export default class Card {
     });
 
     this._element.querySelector('.photo-gallery__image').addEventListener('click', () => {
-      this._handleOpenPopup();
+      this._handleCardClick();
     });
   }
 
