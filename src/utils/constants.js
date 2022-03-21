@@ -1,14 +1,8 @@
 export const ESC_CODE = 'Escape';
 
 export const popupViewImageSelector = '.popup-view-image';
-const popupViewImageElement = document.querySelector(popupViewImageSelector);
-export const srcPopUpViewImage = popupViewImageElement.querySelector('.popup__image');
-export const paragraphPopUpViewImage = popupViewImageElement.querySelector('.popup__paragraph');
 
 export const popupAddCardSelector = '.popup-add-card';
-const popupAddCardElement = document.querySelector(popupAddCardSelector);
-export const nameInputPopUpAddCard = popupAddCardElement.querySelector('#add-card-name');
-export const urlInputPopUpAddCard = popupAddCardElement.querySelector('#add-card-url');
 
 export const popupEditProfileSelector = '.popup-edit-profile';
 const popUpEditProfile = document.querySelector(popupEditProfileSelector);
@@ -54,6 +48,7 @@ export const initialCards = [
 ];
 
 export const settings = {
+  formSelector: '.popup__container_type_form',
   inputSelector: '.popup__item',
   submitButtonSelector: '.popup__submit-btn',
   inactiveButtonClass: 'popup__submit-btn_disabled',

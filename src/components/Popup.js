@@ -16,7 +16,6 @@ export default class Popup {
   }
 
   _handleClickClose(evt) {
-    console.log(evt);
     if(evt.target.classList.contains('popup')) {
       this.close();
     }

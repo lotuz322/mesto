@@ -9,7 +9,7 @@ export default class UserInfo {
     return {
       name: this._name.textContent,
       aboutMe: this._aboutMe.textContent
-    };
+    }
   }
 
   setUserInfo({name, aboutMe}) {

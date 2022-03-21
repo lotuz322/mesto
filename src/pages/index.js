@@ -11,8 +11,6 @@ import {
   nameSelector,
   popupViewImageSelector,
   popupAddCardSelector,
-  nameInputPopUpAddCard,
-  urlInputPopUpAddCard,
   popupEditProfileSelector,
   nameInputPopUpEdit,
   aboutMeInputPopUpEdit,
@@ -20,50 +18,21 @@ import {
   settings
 } from '../utils/constants.js';
 
+const formValidators = {};
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
+
 const validatorAddCard = new FormValidator(settings, document.forms['popup-add-card']);
 const validatorEditProfile =  new FormValidator(settings, document.forms['popup-edit-profile']);
 
 const userInfo = new UserInfo({ nameSelector, aboutMeSelector});
-
-const popupImage = new PopupWithImage(popupViewImageSelector);
-const popupEditProfile = new PopupWithForm({
-  submit: (evt) => {
-    evt.preventDefault();
-
-    const formData = popupEditProfile._getInputValues();
-    userInfo.setUserInfo({name: formData['name'], aboutMe: formData['about-me']});
-
-    validatorEditProfile.toggleButtonState();
-    popupEditProfile.close();
-  }
-}, popupEditProfileSelector);
-const popupAddCard = new PopupWithForm({
-  submit: (evt) => {
-    evt.preventDefault();
-
-    const formData = popupAddCard._getInputValues();
-
-    const card = new Card({
-      name: formData['add-card-name'],
-      alt: formData['add-card-name'],
-      link: formData['add-card-url'],
-      handleCardClick: () => {
-        popupImage.open({
-          name: formData['add-card-name'],
-          link: formData['add-card-url'],
-          alt: formData['add-card-name']
-        });
-      }
-    }, '#gallery__item');
-    gallerySection.addItem(card.generateCard());
-
-    validatorAddCard.toggleButtonState();
-
-    nameInputPopUpAddCard.value = '';
-    urlInputPopUpAddCard.value = '';
-    popupAddCard.close();
-  }
-}, popupAddCardSelector);
 
 const gallerySection = new Section({
   items: initialCards,
@@ -73,28 +42,42 @@ const gallerySection = new Section({
       link: cardData.link,
       alt: cardData.alt,
       handleCardClick: () => {
-        popupImage.open({
-          name: cardData.name,
-          link: cardData.link,
-          alt: cardData.alt
-        });
+        popupImage.open(cardData);
       }
     }, '#gallery__item');
-    gallerySection.addItem(card.generateCard());
+    return card.generateCard();
   }
 }, gallerySelector);
 
-document.querySelector(".profile__edit-btn").addEventListener('click', () => {
-  const userInfo = userInfo.getUserInfo();
-  nameInputPopUpEdit.value = userInfo.name;
-  aboutMeInputPopUpEdit.value = userInfo.aboutMe;
+const popupImage = new PopupWithImage(popupViewImageSelector);
+const popupEditProfile = new PopupWithForm({
+  submit: (formData) => {
+    userInfo.setUserInfo({name: formData['name'], aboutMe: formData['about-me']});
+    popupEditProfile.close();
+  }
+}, popupEditProfileSelector);
+const popupAddCard = new PopupWithForm({
+  submit: (formData) => {
+    gallerySection.addItem({
+      name: formData['add-card-name'],
+      link: formData['add-card-url'],
+      alt: formData['add-card-name']
+    });
+    popupAddCard.close();
+  }
+}, popupAddCardSelector);
 
+document.querySelector(".profile__edit-btn").addEventListener('click', () => {
+  const user = userInfo.getUserInfo();
+  nameInputPopUpEdit.value = user.name;
+  aboutMeInputPopUpEdit.value = user.aboutMe;
+  formValidators['popup-edit-profile'].resetValidation();
   popupEditProfile.open();
 });
 document.querySelector(".profile__add-btn").addEventListener('click', () => {
+  formValidators['popup-add-card'].resetValidation();
   popupAddCard.open();
 });
 
 gallerySection.renderItems();
-validatorAddCard.enableValidation();
-validatorEditProfile.enableValidation();
+enableValidation(settings);
