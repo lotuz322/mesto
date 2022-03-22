@@ -29,9 +29,6 @@ const enableValidation = (config) => {
   });
 }
 
-const validatorAddCard = new FormValidator(settings, document.forms['popup-add-card']);
-const validatorEditProfile =  new FormValidator(settings, document.forms['popup-edit-profile']);
-
 const userInfo = new UserInfo({ nameSelector, aboutMeSelector});
 
 const gallerySection = new Section({
