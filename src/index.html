@@ -14,7 +14,12 @@
 
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="аватар пользователя">
+        <button class="profile__avatar">
+          <img class="profile__avatar-img" src="<%=require('./images/avatar.jpg')%>" alt="аватар пользователя">
+          <div class="profile__overlay">
+            <img class="profile__avatar-edit-icon" src="<%=require('./images/icon-edit.svg')%>">
+          </div>
+        </button>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__about-me">Исследователь океана</p>
@@ -40,8 +45,8 @@
           <span class="popup__item-error name-error"></span>
           <input class="popup__item" id="about-me" type="text" name="about-me" required minlength="2" maxlength="200" placeholder="Расскажите о себе">
           <span class="popup__item-error about-me-error"></span>
-          <button class="popup__submit-btn" type="submit">Сохранить</button>
         </fieldset>
+        <button class="popup__submit-btn" type="submit">Сохранить</button>
         <button class="popup__close-btn" type="button"></button>
       </form>
     </div>
@@ -54,8 +59,28 @@
           <span class="popup__item-error add-card-name-error"></span>
           <input class="popup__item" id="add-card-url" name="add-card-url" type="url" required placeholder="Ссылка на сайт">
           <span class="popup__item-error add-card-url-error"></span>
-          <button class="popup__submit-btn" type="submit">Создать</button>
         </fieldset>
+        <button class="popup__submit-btn" type="submit">Создать</button>
+        <button class="popup__close-btn" type="button"></button>
+      </form>
+    </div>
+
+    <div class="popup popup-update-avatar">
+      <form name="popup-update-avatar" class="popup__container popup__container_type_form" method="post" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <fieldset class="popup__input-container">
+          <input class="popup__item" id="avatar" name="avatar" type="url" required placeholder="Ссылка изображение">
+          <span class="popup__item-error avatar-error"></span>
+        </fieldset>
+        <button class="popup__submit-btn" type="submit">Сохранить</button>
+        <button class="popup__close-btn" type="button"></button>
+      </form>
+    </div>
+
+    <div class="popup popup-del-card">
+      <form name="popup-del-card" class="popup__container popup__container_type_form" method="post" novalidate>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button class="popup__submit-btn" type="submit">Да</button>
         <button class="popup__close-btn" type="button"></button>
       </form>
     </div>
@@ -75,7 +100,10 @@
         <img class="photo-gallery__image" src="images/karachevsk.jpg" alt="Карачаевск">
         <figcaption class="photo-gallery__info">
           <p class="photo-gallery__name">Карачаевск</p>
-          <button class="photo-gallery__like-btn" type="button"></button>
+          <div class="photo-gallery__like">
+            <button class="photo-gallery__like-btn" type="button"></button>
+            <p class="photo-gallery__like-counter">0</p>
+          </div>
         </figcaption>
         <button class="photo-gallery__delete-btn" type="button"></button>
       </figure>

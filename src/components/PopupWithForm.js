@@ -4,6 +4,8 @@ export default class PopupWithForm extends Popup {
   constructor({ submit },popupSelector) {
     super(popupSelector);
     this._inputList = this._popup.querySelectorAll('.popup__item');
+    this._buttonText = this._popup.querySelector('.popup__submit-btn');
+    this._defaultButtonText = this._buttonText.textContent;
     this._submit = (evt) => {
       evt.preventDefault();
       submit(this._getInputValues());
@@ -18,6 +20,14 @@ export default class PopupWithForm extends Popup {
     });
 
     return this._formValues;
+  }
+
+  enableWaitingResponse(text) {
+    this._buttonText.textContent = text;
+  }
+
+  disableWaitingResponse() {
+    this._buttonText.textContent = this._defaultButtonText;
   }
 
   setEventListeners() {

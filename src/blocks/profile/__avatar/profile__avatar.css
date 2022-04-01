@@ -1,5 +1,10 @@
 .profile__avatar {
+  position: relative;
   width: 120px;
   height: 120px;
   border-radius: 90px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0;
+  border: 0;
 }
