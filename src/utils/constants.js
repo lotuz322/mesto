@@ -5,15 +5,13 @@ export const popupUpdateAvatarSelector = '.popup-update-avatar';
 export const popupAddCardSelector = '.popup-add-card';
 
 export const popupEditProfileSelector = '.popup-edit-profile';
-const popUpEditProfile = document.querySelector(popupEditProfileSelector);
-export const nameInputPopUpEdit = popUpEditProfile.querySelector('#name');
-export const aboutMeInputPopUpEdit = popUpEditProfile.querySelector('#about-me');
 
 export const nameSelector = '.profile__name';
-export const aboutMeSelector = '.profile__about-me';
+export const aboutSelector = '.profile__about-me';
+export const avatarSelector = '.profile__avatar-img';
 
 export const gallerySelector = '.photo-gallery';
-export const profileAvatar = document.querySelector('.profile__avatar-img');
+
 
 
 export const settings = {

@@ -9,16 +9,14 @@ import Section from '../components/Section.js';
 import Api from '../components/Api.js';
 import {
   gallerySelector,
-  aboutMeSelector,
+  aboutSelector,
   nameSelector,
   popupViewImageSelector,
   popupAddCardSelector,
   popupEditProfileSelector,
-  nameInputPopUpEdit,
-  aboutMeInputPopUpEdit,
   settings,
   popupUpdateAvatarSelector,
-  profileAvatar
+  avatarSelector
 } from '../utils/constants.js';
 
 
@@ -40,46 +38,42 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-const userInfo = new UserInfo({ nameSelector, aboutMeSelector});
+let gallerySection;
+const userInfo = new UserInfo({ nameSelector, aboutSelector, avatarSelector});
 const popupImage = new PopupWithImage(popupViewImageSelector);
 const popupDelCard = new PopupWithConfirmDel({
-  submit: (target) => {
+  submit: (target, element) => {
     api.delCard(target).then(() => {
+      gallerySection.delItem(element);
       popupDelCard.close();
-    });
+    }).catch((err) => console.log(err));
   }
 }, '.popup-del-card');
-let gallerySection;
 
-api.getProfile()
-  .then(resolve => resolve.json())
-  .then(json => {
-    profileAvatar.src = json.avatar;
-    userInfo.setUserInfo(json)
-  });
 
-api.getInitialCards()
-  .then(json => {
+Promise.all([api.getProfile(), api.getInitialCards()])
+  .then(values => {
+    userInfo.setUserInfo(values[0]);
     gallerySection = new Section({
-      items: json,
+      items: values[1],
       renderer: (cardData) => {
         const card = new Card(cardData,{
           activeUser: userInfo.getUserInfo()._id,
           handleCardClick: () => {
             popupImage.open(cardData);
           },
-          handleCardDel: (target) => {
-            popupDelCard.open(target);
+          handleCardDel: (target, element) => {
+            popupDelCard.open(target, element);
           },
           handleLike: (id) => {
             if(card.checkUserLike()) {
               api.delLikes(id).then(res => {
                 card.setLikes(res.likes);
-              });
+              }).catch((err) => console.log(err));
             } else {
               api.addLikes(id).then(res => {
                 card.setLikes(res.likes);
-              });
+              }).catch((err) => console.log(err));
             }
           }
         }, '#gallery__item');
@@ -87,27 +81,29 @@ api.getInitialCards()
       }
     }, gallerySelector);
     gallerySection.renderItems();
-  });
+  }).catch((err) => console.log(err));
 
 const popupUpdateAvatar = new PopupWithForm({
   submit: (formData) => {
     popupUpdateAvatar.enableWaitingResponse('Сохранение...');
     api.updateAvatar(formData['avatar'])
       .then(json => {
-        profileAvatar.src = json.avatar;
+        userInfo.setUserInfo(json);
         popupUpdateAvatar.disableWaitingResponse();
         popupUpdateAvatar.close();
-      });
+      }).catch((err) => console.log(err));
   }
 }, popupUpdateAvatarSelector);
 const popupEditProfile = new PopupWithForm({
   submit: (formData) => {
     popupEditProfile.enableWaitingResponse('Сохранение...');
-    api.editProfile({name: formData['name'], about: formData['about-me']})
+    api.editProfile({name: formData['name'], about: formData['about']})
       .then(json => {
         userInfo.setUserInfo(json);
-        popupEditProfile.disableWaitingResponse();
         popupEditProfile.close();
+      }).catch((err) => console.log(err))
+      .finally(() => {
+        popupAddCard.disableWaitingResponse();
       });
   }
 }, popupEditProfileSelector);
@@ -119,9 +115,11 @@ const popupAddCard = new PopupWithForm({
       link: formData['add-card-url'],
     }).then(json => {
       gallerySection.addItem(json);
-      popupAddCard.disableWaitingResponse();
       popupAddCard.close();
-    });
+    }).catch((err) => console.log(err))
+      .finally(() => {
+        popupAddCard.disableWaitingResponse();
+      });
   }
 }, popupAddCardSelector);
 
@@ -131,8 +129,7 @@ document.querySelector('.profile__avatar').addEventListener('click', () => {
 });
 document.querySelector(".profile__edit-btn").addEventListener('click', () => {
   const user = userInfo.getUserInfo();
-  nameInputPopUpEdit.value = user.name;
-  aboutMeInputPopUpEdit.value = user.aboutMe;
+  popupEditProfile.setInputValues({name:user.name, about: user.aboutMe});
   formValidators['popup-edit-profile'].resetValidation();
   popupEditProfile.open();
 });
@@ -140,5 +137,22 @@ document.querySelector(".profile__add-btn").addEventListener('click', () => {
   formValidators['popup-add-card'].resetValidation();
   popupAddCard.open();
 });
+
+
+
+function Cards ({settings, obj}) {
+
+}
+
+Cards.prototype.go = function () {
+  return '1';
+}
+
+const ss = new Cards({
+  settings: 1,
+  obj: 2
+});
+
+ss.go();
 
 enableValidation(settings);

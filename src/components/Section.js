@@ -18,6 +18,10 @@ export default class Section {
     });
   }
 
+  delItem(item) {
+    item.remove();
+  }
+
   addItem(item) {
     const card = this._renderer(item);
     this._container.prepend(card);

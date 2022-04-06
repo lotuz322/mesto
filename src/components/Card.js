@@ -11,7 +11,7 @@ export default class Card {
       handleCardClick();
     }
     this._handleCardDel = () => {
-      handleCardDel(this._id);
+      handleCardDel(this._id, this._element);
     }
     this._handleLike = () => {
       handleLike(this._id);

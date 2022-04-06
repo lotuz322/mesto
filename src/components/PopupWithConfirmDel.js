@@ -5,11 +5,12 @@ export default class PopupWithConfirmDel extends Popup {
     super(popupSelector);
     this._submit = (evt) => {
       evt.preventDefault();
-      submit(this._target);
+      submit(this._target, this._element);
     };
   }
-  open(target) {
+  open(target, element) {
     this._target = target;
+    this._element = element;
     super.open();
   }
 
