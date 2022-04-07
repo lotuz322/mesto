@@ -89,9 +89,11 @@ const popupUpdateAvatar = new PopupWithForm({
     api.updateAvatar(formData['avatar'])
       .then(json => {
         userInfo.setUserInfo(json);
-        popupUpdateAvatar.disableWaitingResponse();
         popupUpdateAvatar.close();
-      }).catch((err) => console.log(err));
+      }).catch((err) => console.log(err))
+        .finally(() => {
+          popupAddCard.disableWaitingResponse();
+        });
   }
 }, popupUpdateAvatarSelector);
 const popupEditProfile = new PopupWithForm({
@@ -137,22 +139,4 @@ document.querySelector(".profile__add-btn").addEventListener('click', () => {
   formValidators['popup-add-card'].resetValidation();
   popupAddCard.open();
 });
-
-
-
-function Cards ({settings, obj}) {
-
-}
-
-Cards.prototype.go = function () {
-  return '1';
-}
-
-const ss = new Cards({
-  settings: 1,
-  obj: 2
-});
-
-ss.go();
-
 enableValidation(settings);
