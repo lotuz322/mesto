@@ -92,7 +92,7 @@ const popupUpdateAvatar = new PopupWithForm({
         popupUpdateAvatar.close();
       }).catch((err) => console.log(err))
         .finally(() => {
-          popupAddCard.disableWaitingResponse();
+          popupUpdateAvatar.disableWaitingResponse();
         });
   }
 }, popupUpdateAvatarSelector);
@@ -105,7 +105,7 @@ const popupEditProfile = new PopupWithForm({
         popupEditProfile.close();
       }).catch((err) => console.log(err))
       .finally(() => {
-        popupAddCard.disableWaitingResponse();
+        popupEditProfile.disableWaitingResponse();
       });
   }
 }, popupEditProfileSelector);
